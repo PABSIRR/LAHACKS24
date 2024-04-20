@@ -2,6 +2,7 @@
 
 from LAHACKS import styles
 from LAHACKS.templates import template
+from LAHACKS.state import home
 
 import reflex as rx
 import os
@@ -13,7 +14,7 @@ import google.generativeai as genai
 load_dotenv()
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
-@template(route="/", title="Home")
+@template(route="/home", title="Home")
 def index() -> rx.Component:
     """The home page.
 
