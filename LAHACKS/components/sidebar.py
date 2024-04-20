@@ -1,6 +1,7 @@
 """Sidebar component for the app."""
 
 from LAHACKS import styles
+from LAHACKS.state.base import State
 
 import reflex as rx
 
@@ -18,13 +19,11 @@ def sidebar_header() -> rx.Component:
             rx.image(src="/reflex_white.svg", height="2em"),
         ),
         rx.spacer(),
-        rx.link(
-            rx.button(
-                rx.icon("github"),
-                color_scheme="gray",
-                variant="soft",
-            ),
-            href="https://github.com/reflex-dev/reflex",
+        rx.flex(
+            rx.avatar(fallback=State.user.username[0],radius="medium"),
+            rx.text(State.user.username[0], weight="bold", size="4",align="center"),
+            direction="column",
+            spacing="1"    
         ),
         align="center",
         width="100%",
@@ -32,7 +31,16 @@ def sidebar_header() -> rx.Component:
         padding_x="1em",
         padding_y="2em",
     )
-
+"""
+            rx.link(
+                rx.button(
+                    rx.icon("github"),
+                    color_scheme="gray",
+                    variant="soft",
+                ),
+                href="https://github.com/reflex-dev/reflex",
+            ),
+"""
 
 def sidebar_footer() -> rx.Component:
     """Sidebar footer.
@@ -52,6 +60,7 @@ def sidebar_footer() -> rx.Component:
             href="https://reflex.dev/blog/",
             color_scheme="gray",
         ),
+        rx.button("Sign out", on_click=State.logout,size="3"),
         width="100%",
         border_top=styles.border,
         padding="1em",

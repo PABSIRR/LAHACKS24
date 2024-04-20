@@ -1,3 +1,3 @@
-from .dashboard import dashboard
+from .chat import chat
 from .index import index
 from .settings import settings

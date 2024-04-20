@@ -2,11 +2,12 @@
 
 from LAHACKS import styles
 from LAHACKS.templates import template
+from LAHACKS.state import home
 
 import reflex as rx
 
 
-@template(route="/", title="Home")
+@template(route="/home", title="Home")
 def index() -> rx.Component:
     """The home page.
 

@@ -3,6 +3,7 @@
 # Import all the pages.
 from .pages import *
 from .auth import login, signup
+from .pages import landing
 
 from .state.base import State
 import reflex as rx
@@ -11,9 +12,10 @@ import reflex as rx
 app = rx.App()
 
 # General Pages
-app.add_page(dashboard, on_load=State.check_login())
-app.add_page(index)
-app.add_page(settings)
+app.add_page(chat,on_load=State.check_login())
+app.add_page(index,on_load=State.check_login())
+app.add_page(settings,on_load=State.check_login())
+app.add_page(landing.landing(),route="/",title="landing")
 
 # Auth Pages
 app.add_page(login.login(),route="/login")

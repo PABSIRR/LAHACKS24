@@ -11,7 +11,7 @@ class State(rx.State):
     def logout(self):
         """Log out a user."""
         self.reset()
-        return rx.redirect("/")
+        return rx.redirect("/login")
 
     def check_login(self):
         """Check if a user is logged in."""
