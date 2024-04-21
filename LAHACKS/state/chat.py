@@ -27,10 +27,10 @@ genai.configure(api_key=GOOGLE_API_KEY)
 
 class ChatState(State):
     show_columns = ["Question", "Answer"]
-    prompts: list[str] = ["Have doubts about your prescription? Get a second opinion! It's possible your physician make have overlooked something",
-                     "Verify whether your dosage is correct",
-                     "Make certain that the prescription you've received matches the one prescribed by your doctor. Medications that look-alike or sound-alike are sometimes mixed up! (Note: image or name of medicine is required)",
-                     "Learn more about your medication, like how to take it and what it does"]
+    prompts: list[str] = ["Concerned about your prescription? Get a second opinion!",
+                        "Verify whether your dosage is correct",
+                        "Ensure your prescription is correct (image or name needed)",
+                        "Explore your medication, its usage, and effects"]
     value: str = prompts[0]     # selected option from dropdown menu; default is first prompt option
     prompt: str = ""
     result: str = ""            # response from Google Gemini based on prompt + context
