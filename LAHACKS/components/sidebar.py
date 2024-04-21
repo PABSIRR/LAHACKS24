@@ -52,8 +52,8 @@ def sidebar_footer() -> rx.Component:
     """
     return rx.hstack(
         rx.flex(
-            rx.avatar(fallback=State.user.username[0],radius="medium",height="80%"),
-            rx.text(State.user.username, weight="bold", size="4",align="center",width="100%",height="80%",text_align="center"),
+            rx.avatar(fallback=State.user.username[0],radius="medium"),
+            rx.text(State.user.username, weight="bold", size="4",align="center",width="100%",height="80%",text_align="center",align_items="stretch"),
             direction="row",
             spacing="1",
             width="100%",   

@@ -63,6 +63,7 @@ def menu_button() -> rx.Component:
         z_index="500",
         left="2em",
         height="32px",
+        background_color="#C6CFDE"
     )
 
 def template(
@@ -105,7 +106,7 @@ def template(
                 rx.vstack(
                     rx.hstack(
                         menu_button(),
-                        rx.button("Sign out", on_click=State.logout,size="3",width="10%",top="2em",position="sticky",height="32px",right="2em",margin="2em"),
+                        rx.button("Sign out", on_click=State.logout,size="3",width="10%",top="2em",position="sticky",height="32px",right="2em",margin="2em",background_color="#56709B"),
                         align_items="left",
                         width="100%",
                         margin_left="auto",

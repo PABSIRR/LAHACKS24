@@ -80,8 +80,9 @@ def ask_gpt_form() -> rx.Component:
                     radius="full",
                     width="100%",
                     size="2",
+                    background_color="#C6CFDE"
                 ),
-                rx.button("Ask", width="100%"),
+                rx.button("Ask", width="100%",background_color="#56709B"),
                 spacing="3",
             ),
             on_submit=ChatState.get_result,

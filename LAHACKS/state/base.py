@@ -8,6 +8,7 @@ class State(rx.State):
 
     user: Optional[User] = None
 
+
     def logout(self):
         """Log out a user."""
         self.reset()
