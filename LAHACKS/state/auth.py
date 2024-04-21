@@ -38,6 +38,6 @@ class AuthState(State):
             ).first()
             if user and user.password == self.password:
                 self.user = user
-                return rx.redirect("/home")
+                return rx.redirect("/chat")
             else:
                 return rx.window_alert("Invalid username or password.")
