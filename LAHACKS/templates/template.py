@@ -111,7 +111,7 @@ def template(
                     ),
                     **styles.template_page_style,
                 ),
-                rx.button("Sign out", on_click=State.logout,size="3",width="10%",top="2em",position="sticky",height="32px",right="2em",margin-right="2em"),
+                rx.button("Sign out", on_click=State.logout,size="3",width="10%",top="2em",position="sticky",height="32px",right="2em",margin_right="2em"),
                 menu_button(),
                 align="start",
                 background=f"radial-gradient(circle at top right, {rx.color('accent', 2)}, {rx.color('mauve', 1)});",
