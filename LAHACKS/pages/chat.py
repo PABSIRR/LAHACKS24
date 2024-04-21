@@ -6,7 +6,6 @@ from LAHACKS import styles
 
 import reflex as rx
 
-
 def chat_func() -> rx.Component:
     return rx.box(
         rx.foreach(
@@ -37,6 +36,30 @@ def action_bar() -> rx.Component:
         ),
     )
 
+def upload_btn() -> rx.Component:
+    color = "rgb(107,99,246)"
+    return rx.vstack(
+        rx.upload(
+            rx.vstack(
+                rx.button("Select File", color=color, bg="white", border=f"1px solid {color}"),
+                rx.text("Drag and drop files here or click to select files"),
+            ),
+            id="upload1",
+            border=f"1px dotted {color}",
+            padding="5em",
+        ),
+        rx.hstack(rx.foreach(rx.selected_files("upload1"), rx.text)),
+        rx.button(
+            "Upload",
+            on_click=ChatState.handle_upload(rx.upload_files(upload_id="upload1")),
+        ),
+        rx.button(
+            "Clear",
+            on_click=rx.clear_selected_files("upload1"),
+        ),
+        rx.foreach(ChatState.img, lambda img: rx.image(src=rx.get_upload_url(img))),
+        padding="5em",
+    )
 
 @template(route="/chat", title="Chat")
 def chat() -> rx.Component:
@@ -44,6 +67,7 @@ def chat() -> rx.Component:
         rx.vstack(
             chat_func(),
             action_bar(),
+            upload_btn(),
             align="center",
         ),
         width="100%",
