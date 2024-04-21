@@ -29,21 +29,20 @@ def auth_layout(*args):
     return rx.box(
         rx.vstack(
             rx.hstack(
-                rx.heading("Depth"),
+                rx.heading("DEPTH.AI",font_family="IBM Plex Sans Condensed",padding_bottom="125px",on_click=rx.redirect("/")),
                 rx.image(src="/logo_actual.svg", height="2em"),
                 top="2em",
                 left="2em",
                 position="sticky",
                 size=5
             ),
+        ),
             container(
                 rx.vstack(
-                    rx.heading("Sign In",font_family="ocr-a-std, monospace",font_weight="400",size="8"),
+                    rx.heading("Sign Up",font_family="Lato",font_weight="400",size="8"),
                     rx.heading("Your Digital Care Companion",size="2"),
-                    align="center"
+                    align="center",
                 ),
                 *args, 
             )
         )
-    )
-    

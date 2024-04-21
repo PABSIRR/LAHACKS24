@@ -37,7 +37,8 @@ def login():
                     ),
                     width="100%"
                 ),
-                rx.button("Sign in", on_click=AuthState.login, size="3", width="100%",border_radius="2px"),
+                rx.button("Log in", on_click=AuthState.login, size="3", width="100%",border_radius="2px",background="#98ADCF",
+                color="white"),
                 spacing="4",
                 flex_direction="column",
                 width="100%"
@@ -51,7 +52,7 @@ def login():
         ),
         rx.text(
             "New to DEPTH.AI ",
-            rx.link("Sign up here.", href="/signup"),
+            rx.link("Sign up here.", href="/signup",color="#56709B"),
             color="black",
             align="center"
         ),

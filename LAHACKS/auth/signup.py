@@ -53,7 +53,9 @@ def signup():
                         on_click=AuthState.signup,
                         size="3",
                         width="100%",
-                        border_radius="4px"
+                        border_radius="4px",
+                        background="#98ADCF",
+                        color="white"
                     ),
                     width="100%"
                 ),
@@ -68,7 +70,7 @@ def signup():
         ),
         rx.text(
             "Already have an account? ",
-            rx.link("Sign in here.", href="/login"),
+            rx.link("Sign in here.", href="/login", color="#56709B"),
             color="gray",
         ),
     )

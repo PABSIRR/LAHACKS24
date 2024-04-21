@@ -31,7 +31,7 @@ def landing() -> rx.Component:
             width="100%",
             border_bottom="1px solid white",
             padding="0.5em",
-            background_color="#56709B"
+            #background_color="#56709B"
         ),
         rx.vstack(
             rx.heading("WELCOME TO", font_family="Lato", font_size=45),
@@ -48,8 +48,14 @@ def landing() -> rx.Component:
             id = "Section1"
         ),
         rx.vstack(
-            rx.heading("ABOUT US", font_family="Lato", font_size=45, padding_top = "50"),
-            rx.heading("We are a group of passionate college students aiming to make an impact \n in preventing avoidable health care errors. \n Medical errors account for 251,000 deaths in the US and 44% of these errors are mistakes in medicine.", font_style="italic", font_family = "Lato", padding_bottom=10),
+            rx.heading("ABOUT US", font_family="Lato", font_size=45, padding_bottom = "50px"),
+            #rx.heading("We are a group of passionate college students aiming to make an impact \n in preventing avoidable health care errors. \n Medical errors account for 251,000 deaths in the US and 44% of these errors are mistakes in medicine.", font_style="italic", font_family = "Lato", padding_bottom=10),
+            rx.flex(
+                rx.card(rx.markdown("We are a group of passionate freshman in college looking to make an impact in reducing medical errors in healthcare and save lives. \n\n Medical errors account for **251,000 deaths** in the US and **44%** of these errors are mistakes in medicine. We aim to reduce these errors \n\n through the use of DEPTH.AI, a medical tool that helps the patient get a second opinion their prescription and diagnoses. "), align="center",font_family="Lato", font_size="24",size="5", color="black"),
+                spacing="2",
+                align_items="flex-start",
+                flex_wrap="wrap",
+            ),
             width="100%",
             align="center",
             justify="center",
