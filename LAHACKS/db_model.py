@@ -4,10 +4,11 @@ import datetime
 
 class User(rx.Model, table=True):
     """
-    Each use has a username / password
+    Each user has a username / password
     """
     username: str
     password: str
+    email: str | None = None
     
 class Post(rx.Model, table=True):
     """

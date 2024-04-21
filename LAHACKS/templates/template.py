@@ -5,6 +5,7 @@ from __future__ import annotations
 from LAHACKS import styles
 from LAHACKS.components.sidebar import sidebar
 from typing import Callable
+from LAHACKS.state.base import State
 
 import reflex as rx
 
@@ -54,24 +55,15 @@ def menu_button() -> rx.Component:
                     for page in get_decorated_pages()
                 ],
                 rx.menu.separator(),
-                menu_item_link("About", "https://github.com/reflex-dev"),
-                menu_item_link("Contact", "mailto:founders@=reflex.dev"),
             ),
         ),
-        position="fixed",
+        position="sticky",
         right="2em",
         top="2em",
         z_index="500",
+        left="2em",
+        height="32px",
     )
-
-
-class ThemeState(rx.State):
-    """The state for the theme of the app."""
-
-    accent_color: str = "crimson"
-
-    gray_color: str = "gray"
-
 
 def template(
     route: str | None = None,
@@ -119,6 +111,7 @@ def template(
                     ),
                     **styles.template_page_style,
                 ),
+                rx.button("Sign out", on_click=State.logout,size="3",width="10%",top="2em",position="sticky",height="32px",right="2em",margin="2em"),
                 menu_button(),
                 align="start",
                 background=f"radial-gradient(circle at top right, {rx.color('accent', 2)}, {rx.color('mauve', 1)});",
@@ -137,8 +130,6 @@ def template(
             return rx.theme(
                 templated_page(),
                 has_background=True,
-                accent_color=ThemeState.accent_color,
-                gray_color=ThemeState.gray_color,
             )
 
         return theme_wrap
