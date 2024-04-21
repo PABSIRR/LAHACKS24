@@ -6,7 +6,6 @@ from LAHACKS import styles
 
 import reflex as rx
 
-
 def chat_func() -> rx.Component:
     return rx.box(
         rx.foreach(
