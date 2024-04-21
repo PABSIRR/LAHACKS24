@@ -5,12 +5,11 @@ from LAHACKS.db_model import Post, User, Question
 
 import reflex as rx
 
-MAX_QUESTIONS = 10
+MAX_QUESTIONS = 100
 
 def result_view() -> rx.Component:
     return rx.fragment(
         rx.flex(
-            rx.text(TestState.prompt),
             rx.cond(
                 TestState.loading,
                 rx.chakra.spinner(),
@@ -68,9 +67,10 @@ def upload() -> rx.Component:
 def ask_gpt_form() -> rx.Component:
     return rx.vstack(
         rx.heading("Ask DEPTH.AI", font_size="1.5em", align="center"),
+        upload(),
         rx.form(
             rx.vstack(
-                rx.input(placeholder="Provide any other relevant context (optional)", name="prompt", width="100%"),
+                rx.input(placeholder="Provide any other relevant context (optional)", name="context", width="100%"),
                 rx.select(
                     TestState.prompts,
                     on_change=TestState.set_value,

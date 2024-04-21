@@ -12,33 +12,39 @@ import google.generativeai as genai
 from dotenv import load_dotenv
 from PIL import Image
 
-MAX_QUESTIONS = 10
+MAX_QUESTIONS = 100
 
 # load the Google Gemini Model
 load_dotenv()
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
-
 genai.configure(api_key=GOOGLE_API_KEY)
-model = genai.GenerativeModel("gemini-pro")
+generation_config = {
+  "temperature": 0.5,
+  "top_p": 0.95,
+  "top_k": 0,
+  "max_output_tokens": 8192,
+}
 
 class TestState(State):
+    show_columns = ["Question", "Answer"]
     prompts: list[str] = ["Have doubts about your prescription? Get a second opinion! It's possible your physician make have overlooked something",
                      "Verify whether your dosage is correct",
                      "Make certain that the prescription you've received matches the one prescribed by your doctor. Medications that look-alike or sound-alike are sometimes mixed up! (Note: image or name of medicine is required)",
                      "Learn more about your medication, like how to take it and what it does"]
-    value: str = prompts[0]
-    show_columns = ["Question", "Answer"]
-    question: str
-    img: list[str]
-    context: str
+    value: str = prompts[0]     # selected option from dropdown menu; default is first prompt option
+    prompt: str = ""
+    result: str = ""            # response from Google Gemini based on prompt + context
+    pdf_paths: list[str]        # paths of PDFs that are uploaded
+    image_paths: list[str]      # paths of images that are uploaded
+    img: list[str]              # for file upload functionality
+
     username: str = ""
     logged_in: bool = False
-    prompt: str = ""
-    result: str = ""
     loading: bool = False
     filter: str = ""
     
     async def handle_upload(self, files: list[rx.UploadFile]):
+        # Files that are upload can be PDFs and/or Images
         for file in files:
             upload_data = await file.read()
             outfile = rx.get_upload_dir() / file.filename
@@ -49,11 +55,13 @@ class TestState(State):
 
             # Update the img var.
             self.img.append(file.filename)
-
-            self.context = self.extract_text_from_pdf(f"uploaded_files/{file.filename}")
-            
-            # Won't store user's medical history!
-            os.remove(f"uploaded_files/{file.filename}")
+            print(file.filename)
+            # Add file path to appropriate folder so that it can be processed as model inputs
+            if (file.filename[-3:].lower() == "pdf"):
+                self.pdf_paths.append(f"uploaded_files/{file.filename}")
+            else:
+                # Assume that file is an image
+                self.image_paths.append(f"uploaded_files/{file.filename}")
 
     def extract_text_from_pdf(self, file):
         text = ""
@@ -67,45 +75,58 @@ class TestState(State):
             text += page.extract_text()
         return text
 
-    def get_model_input(self, context = "", files = [], images = []) -> list:
+    def get_model_input(self, context = "", pdfs = [], images = []) -> list:
         '''takes in input features and creates a list to pass into gemini model'''
         model_images = [Image.open(x) for x in images]
-        model_files = [self.extract_text_from_pdf(x) for x in files]
-        return list(context)+model_files+model_images
+        model_pdfs = [self.extract_text_from_pdf(x) for x in pdfs]
+        # Remove files from local directory; patient data is NOT stored
+        for image_path in images: os.remove(image_path)
+        for pdf_path in pdfs: os.remove(pdf_path)
+        return list(context)+model_pdfs+model_images
 
     def perscription_feedback_model(self, model_input: list) -> str :
         model_instructions = """You are a tool designed to provide feedback on diagnosis/prescriptions given by doctors 
         Given the information about the patient, their diagnosis, and their prescription, you are to find any 
         abnormalities, inconsistencies, misinformation, etc. that the doctor may have overlooked when given the patient 
         their prescription."""
-        model = genai.GenerativeModel("models/gemini-1.5-pro-latest", system_instruction=model_instructions)
+        model = genai.GenerativeModel("models/gemini-1.5-pro-latest", 
+                                  generation_config=generation_config,
+                                  system_instruction=model_instructions)
         response = model.generate_content(model_input)
         return response.text
 
     def dose_feedback_model(self, model_input:list) -> str:
         model_instructions = """You are a tool designed to provide feedback on the dosage of prescriptions given by doctors 
         to patients. Given information about the patients medical history, diagnosis, and the drug prescribed provide 
-        feedback on possible areas of ocncern within the dosage given to the patient"""
-        model = genai.GenerativeModel("models/gemini-1.5-pro-latest", system_instruction=model_instructions)
+        feedback on possible areas of concern within the dosage given to the patient. Make sure to double check normal
+        dosage amounts for other patients with similar physical traits, conditions, etc. to validate the dosage amount
+        given by the doctor."""
+        model = genai.GenerativeModel("models/gemini-1.5-pro-latest", 
+                                  generation_config=generation_config,
+                                  system_instruction=model_instructions)
         response = model.generate_content(model_input)
         return response.text
 
     def med_verify_model(self, model_input:list) -> str:
-        model_instructions = """ You are a tool designed to verify that prescriptions given by the doctor match the
+        model_instructions = """You are a tool designed to verify that prescriptions given by the doctor match the
         prescription recieved by the patient. Sometimes similarly spelled medications are mixed up and lead to the wrong
         medicine in the patient's hand. Given the diagnosis and the picture of the prescription, notify the user if there are 
         any discrepencies in the medication given."""
-        model = genai.GenerativeModel("models/gemini-1.5-pro-latest", system_instruction=model_instructions)
+        model = genai.GenerativeModel("models/gemini-1.5-pro-latest", 
+                                  generation_config=generation_config,
+                                  system_instruction=model_instructions)
         response = model.generate_content(model_input)
         return response.text
 
     def med_explanation_model(self, model_input:list) -> str:
         model_instructions = """You are a tool designed to help explain complicated prescriptions and dosage instructions
         to patients simply. When given information about any, some, or all of the following information, you are to provide
-        an explanation of what the drug is, what it does, and how to administer the drug given the dosage. The information
+        an explanation of what the drug is, what it does, and how to administer the drug given the dosage . The information
         you should be able to process is: an image of the drug bottle, description of the general diagnosis/drug name, or 
         the doctors notes given to the patient about the diagnosis and prescription."""
-        model = genai.GenerativeModel("models/gemini-1.5-pro-latest", system_instruction=model_instructions)
+        model = genai.GenerativeModel("models/gemini-1.5-pro-latest", 
+                                  generation_config=generation_config,
+                                  system_instruction=model_instructions)
         response = model.generate_content(model_input)
         return response.text
 
@@ -138,16 +159,17 @@ class TestState(State):
         yield
         try:
             """Respond to prompt"""
-            model_inputs = self.get_model_input( context=self.question, images = [] )
+            print("context: ", form_data["context"], "\n", "pdfs: ", self.pdf_paths, "\n", "imgs: ", self.image_paths)
+            
+            model_inputs = self.get_model_input( context=form_data["context"], pdfs=self.pdf_paths, images=self.image_paths )
             if (self.prompt == self.prompts[0]):
-                answer = self.perscription_feedback_model(model_inputs)
+                self.result = self.perscription_feedback_model(model_inputs)
             elif (self.prompt == self.prompts[1]):
-                answer = self.dose_feedback_model(model_inputs)
+                self.result = self.dose_feedback_model(model_inputs)
             elif (self.prompt == self.prompts[2]):
-                answer = self.med_verify_model(model_inputs)
+                self.result = self.med_verify_model(model_inputs)
             elif (self.prompt == self.prompts[3]):
-                answer = self.med_explanation_model(model_inputs)
-            self.result = answer
+                self.result = self.med_explanation_model(model_inputs)
         except Exception as e:
             print(e)
             return rx.window_alert("Error occured with OpenAI execution.")
