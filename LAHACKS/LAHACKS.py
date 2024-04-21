@@ -3,7 +3,6 @@
 # Import all the pages.
 from .pages import *
 from .auth import *
-from .pages import landing
 
 from .state.base import State
 import reflex as rx
@@ -26,7 +25,6 @@ app = rx.App(
 # General Pages
 app.add_page(chat,on_load=State.check_login())
 app.add_page(index,on_load=State.check_login())
-app.add_page(test,on_load=State.check_login())
 app.add_page(landing,route="/",title="landing")
 
 
