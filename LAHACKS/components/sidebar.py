@@ -23,7 +23,7 @@ def sidebar_header() -> rx.Component:
                 "DEPTH.AI",
                 style=styles.depth_ai_style,
                 font_size="30px",
-                background_color="rgb(0,0,0)"
+                background_color="white"
             ),
             on_click=rx.redirect("/")
         ),
@@ -52,15 +52,17 @@ def sidebar_footer() -> rx.Component:
     """
     return rx.hstack(
         rx.flex(
-            rx.avatar(fallback=State.user.username[0],radius="medium"),
+            rx.avatar(fallback=State.user.username[0],radius="medium", color="#98ADCF"),
             rx.text(State.user.username, weight="bold", size="4",align="center",width="100%",height="80%",text_align="center",align_items="stretch"),
             direction="row",
             spacing="1",
             width="100%",   
+            color="#98ADCF",
         ),
         width="100%",
         border_top=styles.border,
         padding="1em",
+        color="#98ADCF",
     )
 
 
@@ -133,6 +135,7 @@ def sidebar() -> rx.Component:
                 overflow_y="auto",
                 align_items="flex-start",
                 padding="1em",
+                color="#98ADCF",
             ),
             rx.spacer(),
             sidebar_footer(),
@@ -144,4 +147,5 @@ def sidebar() -> rx.Component:
         position="sticky",
         top="0px",
         border_right=styles.border,
+        color="#98ADCF",
     )
