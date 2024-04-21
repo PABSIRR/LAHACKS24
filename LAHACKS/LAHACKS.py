@@ -27,7 +27,7 @@ app = rx.App(
 app.add_page(chat,on_load=State.check_login())
 app.add_page(index,on_load=State.check_login())
 app.add_page(test,on_load=State.check_login())
-app.add_page(landing.landing(),route="/",title="landing")
+app.add_page(landing,route="/",title="landing")
 
 
 # Auth Pages

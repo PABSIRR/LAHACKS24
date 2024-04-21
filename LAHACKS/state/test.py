@@ -3,7 +3,7 @@ import reflex as rx
 from .base import State
 from LAHACKS.db_model import Post, User, Question
 
-from datetime import datetime
+from datetime import timedelta, datetime
 from sqlmodel import select, or_
 from pypdf import PdfReader 
 import os
@@ -124,7 +124,7 @@ class TestState(State):
                         .where(Question.username == self.username)
                         .where(
                             Question.timestamp
-                            > datetime.datetime.now() - datetime.timedelta(days=1)
+                            > datetime.now() - timedelta(days=1)
                         )
                     ).all()
                 )

@@ -29,7 +29,7 @@ def result_view() -> rx.Component:
                     ),
                 ),
             ),
-            type_="hover",
+            type="hover",
             width="100%",
             max_height="7em",
         ),
@@ -98,7 +98,7 @@ def saved_qa_item(qa: Question, ix: int) -> rx.Component:
         header=rx.text(qa.prompt, size="3", align="left"),
         content=rx.scroll_area(
             rx.text(qa.answer, size="2"),
-            type_="hover",
+            type="hover",
             max_height="10em",
             padding="12px",
         ),
