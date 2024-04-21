@@ -6,8 +6,7 @@ def container(*children, **props):
     """
     props = (
         dict(
-            width="100%",
-            max_width="960px",
+            width="40%",
             background="white",
             height="100%",
             px="9",
@@ -28,13 +27,21 @@ def container(*children, **props):
 
 def auth_layout(*args):
     return rx.box(
-        container(
-            rx.vstack(
+        rx.vstack(
+            rx.hstack(
                 rx.heading("Depth"),
-                rx.heading("Sign in or create an account"),
-                align="center"
+                rx.image(src="/logo_actual.svg", height="2em"),
+                top="2em",
+                left="2em"
             ),
-            *args, 
+            container(
+                rx.vstack(
+                    rx.heading("Sign In"),
+                    rx.heading("Your Digital Care Companion"),
+                    align="center"
+                ),
+                *args, 
+            )
         )
     )
     
