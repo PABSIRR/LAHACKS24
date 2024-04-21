@@ -36,7 +36,7 @@ def landing() -> rx.Component:
         rx.vstack(
             rx.heading("WELCOME TO", font_family="Lato", font_size=45),
             rx.heading("DEPTH.AI",style=depth_ai_style),
-            rx.heading("Your digital care companion", font_style="italic", font_family = "Lato", padding_bottom=10),
+            rx.heading("Your medical care companion", font_style="italic", font_family = "Lato", padding_bottom=10),
             rx.button("Try It Out", font_family="Lato", font_size=25, color="white", width=300, 
                         height=81.0389627229, line_height="175px",border_radius=30, background="#56709B", 
                         on_click=rx.redirect("/chat")),
@@ -48,18 +48,13 @@ def landing() -> rx.Component:
             id = "Section1"
         ),
         rx.vstack(
-            rx.heading("WELCOME TO", font_family="Lato", font_size=45),
-            rx.heading("DEPTH.AI",style=depth_ai_style),
-            rx.heading("Your digital care companion", font_style="italic", font_family = "Lato", padding_bottom=10),
-            rx.button("Try It Out", font_family="Lato", font_size=25, color="white", width=300, 
-                        height=81.0389627229, line_height="175px",border_radius=30, background="#56709B", 
-                        on_click=rx.redirect("/chat")),
+            rx.heading("ABOUT US", font_family="Lato", font_size=45, padding_top = "50"),
+            rx.heading("We are a group of passionate college students aiming to make an impact \n in preventing avoidable health care errors. \n Medical errors account for 251,000 deaths in the US and 44% of these errors are mistakes in medicine.", font_style="italic", font_family = "Lato", padding_bottom=10),
             width="100%",
-            #height="100%",
             align="center",
             justify="center",
             height="100vh",
-            id = "Section2"
+            id = "Section2",
         ),
         align = "center",
         bg="#C6CFDE"

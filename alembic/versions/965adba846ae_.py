@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 859675a44160
+Revision ID: 965adba846ae
 Revises: 
-Create Date: 2024-04-21 00:15:29.869089
+Create Date: 2024-04-21 01:06:05.271123
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 import sqlmodel
 
 # revision identifiers, used by Alembic.
-revision: str = '859675a44160'
+revision: str = '965adba846ae'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -40,7 +40,7 @@ def upgrade() -> None:
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('username', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
     sa.Column('password', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
-    sa.Column('email', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
+    sa.Column('email', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###
