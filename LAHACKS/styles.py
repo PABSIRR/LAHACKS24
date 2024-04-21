@@ -74,3 +74,10 @@ button_style = dict(
     background_color=rx.color("accent", 10),
     box_shadow=shadow,
 )
+
+button_style_landing = dict(
+    _hover={"background_color": "#8eadd9"},
+    box_shadow = shadow,
+    background_color="inherit",
+    text_align="center"
+)
