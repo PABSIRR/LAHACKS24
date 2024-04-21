@@ -12,7 +12,7 @@ hover_accent_bg = {"_hover": {"background_color": accent_color}}
 content_width_vw = "90vw"
 sidebar_width = "20em"
 
-template_page_style = {"padding_top": "5em", "padding_x": ["auto", "2em"], "flex": "1"}
+template_page_style = {"padding_top": "1em", "padding_x": ["auto", "2em"], "flex": "1"}
 
 template_content_style = {
     "border_radius": border_radius,
@@ -81,3 +81,13 @@ button_style_landing = dict(
     background_color="inherit",
     text_align="center"
 )
+
+depth_ai_style = {
+    "font-family": "IBM Plex Sans Condensed",
+    "font-style": "normal",
+    "font-weight": "600",
+    "font-size": "150px",
+    "line-height": "165px",
+    "color": "#3B495B",
+    "text-shadow": "6px 6px 4px rgba(0, 0, 0, 0.15)",
+}

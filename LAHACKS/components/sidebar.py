@@ -18,13 +18,14 @@ def sidebar_header() -> rx.Component:
             rx.image(src="/logo_actual.svg", height="2em"),
             rx.image(src="/logo_actual.svg", height="2em"),
         ),
-        rx.spacer(),
         rx.link(
             rx.button(
-                rx.icon("notebook-pen"),
-                color_scheme="gray",
-                variant="soft",
-            )
+                "DEPTH.AI",
+                style=styles.depth_ai_style,
+                font_size="30px",
+                background_color="rgb(0,0,0)"
+            ),
+            on_click=rx.redirect("/")
         ),
         align="center",
         width="100%",
@@ -51,8 +52,8 @@ def sidebar_footer() -> rx.Component:
     """
     return rx.hstack(
         rx.flex(
-            rx.avatar(fallback=State.user.username[0],radius="medium"),
-            rx.text(State.user.username, weight="bold", size="4",align="center",width="100%"),
+            rx.avatar(fallback=State.user.username[0],radius="medium",height="80%"),
+            rx.text(State.user.username, weight="bold", size="4",align="center",width="100%",height="80%",text_align="center"),
             direction="row",
             spacing="1",
             width="100%",   

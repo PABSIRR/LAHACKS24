@@ -102,21 +102,35 @@ def template(
         def templated_page():
             return rx.hstack(
                 sidebar(),
-                rx.box(
-                    rx.vstack(
-                        page_content(),
-                        rx.spacer(),
-                        rx.logo(),
-                        **styles.template_content_style,
+                rx.vstack(
+                    rx.hstack(
+                        menu_button(),
+                        rx.button("Sign out", on_click=State.logout,size="3",width="10%",top="2em",position="sticky",height="32px",right="2em",margin="2em"),
+                        align_items="left",
+                        width="100%",
+                        margin_left="auto",
+                        flex_direction="row-reverse"
                     ),
-                    **styles.template_page_style,
+                    rx.box(
+                        rx.vstack(
+                            page_content(),
+                            rx.spacer(),
+                            rx.logo(),
+                            **styles.template_content_style,
+                        ),
+                        **styles.template_page_style,
+                        width="100%",
+                        margin_left="auto",
+                        flex_wrap="wrap",
+                        flex_basis="100%"
+                    ),
+                    width="100%",
+                    position="relative"
                 ),
-                rx.button("Sign out", on_click=State.logout,size="3",width="10%",top="2em",position="sticky",height="32px",right="2em",margin="2em"),
-
-                menu_button(),
                 align="start",
                 background=f"radial-gradient(circle at top right, {rx.color('accent', 2)}, {rx.color('mauve', 1)});",
                 position="relative",
+                width="100%"
             )
 
         @rx.page(

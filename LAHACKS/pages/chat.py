@@ -1,6 +1,7 @@
 from LAHACKS.templates import template
 from LAHACKS.state.chat import ChatState
 from LAHACKS.db_model import Post, User, Question
+from LAHACKS import styles
 
 import reflex as rx
 
@@ -40,12 +41,13 @@ def upload() -> rx.Component:
     return rx.vstack(
         rx.upload(
             rx.vstack(
-                rx.button("Select any relevant files (i.e. health documents)", color="black", bg="white", border=f"1px solid {color}"),
+                rx.button("Select any relevant files (i.e. health documents)", color="black", bg="white", border=f"1px solid {color}",width="100%"),
             ),
             id="upload1",
             border=f"1px dotted {color}",
             padding="2em",
             on_drop=ChatState.handle_upload(rx.upload_files(upload_id="upload1")),
+            width="100%"
         ),
         rx.hstack(rx.foreach(rx.selected_files("upload1"), rx.text)),
         # rx.button(
@@ -62,7 +64,6 @@ def upload() -> rx.Component:
 
 def ask_gpt_form() -> rx.Component:
     return rx.vstack(
-        rx.heading("Ask DEPTH.AI", font_size="1.5em", align="center"),
         upload(),
         rx.form(
             rx.vstack(
@@ -135,17 +136,33 @@ def saved_qa() -> rx.Component:
 def chat() -> rx.Component:
     return rx.center(
         rx.vstack(
-            rx.card(ask_gpt_form()),
+            rx.cond(
+                ChatState.loaded,
+                rx.vstack(
+                    rx.image(src="/logo_actual.svg", height="2em"),
+                    rx.heading("What can we answer today?", font_size="1.5em", align="center",padding_bottom="0.5em"),
+                    width="100%",
+                    align="center"
+                ),
+            ),
+            rx.card(ask_gpt_form(),width="100%"),
             rx.cond(
                 ChatState.logged_in,
-                rx.card(saved_qa()),
+                rx.card(saved_qa(),width="100%"),
             ),
             spacing="4",
             width="100%",
+            margin_left="auto",
+            flex_wrap="wrap",
+            flex_basis="100%"
         ),
         justify="center",
-        padding_top="6em",
+        padding_top="1em",
         text_align="top",
         position="relative",
-        width="100%"
+        width="100%",
+        margin_left="auto",
+        flex_wrap="wrap",
+        flex_basis="100%"
+        
     )
