@@ -8,28 +8,54 @@ def signup():
     return auth_layout(
         rx.box(
             rx.vstack(
-                rx.input(
-                    placeholder="Username",
-                    on_blur=AuthState.set_username,
-                    size="3",
+                rx.box(
+                    rx.input(
+                        placeholder="Username",
+                        on_blur=AuthState.set_username,
+                        size="3",
+                        width="100%"
+                    ),
+                    width="100%"
                 ),
-                rx.input(
+                rx.box(
+                    rx.input(
+                        placeholder="Email",
+                        type="email",
+                        on_blur=AuthState.set_email,
+                        size="3",
+                        width="100%"
+                    ),
+                    width="100%"
+                ),
+                rx.box(
+                    rx.input(
                     type="password",
                     placeholder="Password",
                     on_blur=AuthState.set_password,
                     size="3",
+                    width="100%"
+                    ),
+                    width="100%"    
                 ),
-                rx.input(
+                rx.box(
+                    rx.input(
                     type="password",
                     placeholder="Confirm password",
                     on_blur=AuthState.set_confirm,
                     size="3",
+                    width="100%"
+                    ),
+                    width="100%"    
                 ),
-                rx.button(
-                    "Sign up",
-                    on_click=AuthState.signup,
-                    size="3",
-                    width="6em",
+                rx.box(
+                    rx.button(
+                        "Sign up",
+                        on_click=AuthState.signup,
+                        size="3",
+                        width="100%",
+                        border_radius="4px"
+                    ),
+                    width="100%"
                 ),
                 spacing="4",
             ),
@@ -42,7 +68,7 @@ def signup():
         ),
         rx.text(
             "Already have an account? ",
-            rx.link("Sign in here.", href="/"),
+            rx.link("Sign in here.", href="/login"),
             color="gray",
         ),
     )

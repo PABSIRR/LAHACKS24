@@ -1,13 +1,14 @@
 from sqlmodel import Field
 import reflex as rx
-
+import datetime
 
 class User(rx.Model, table=True):
     """
-    Each use has a username / password
+    Each user has a username / password
     """
     username: str
     password: str
+    email: str | None = None
     
 class Post(rx.Model, table=True):
     """
@@ -19,6 +20,12 @@ class Post(rx.Model, table=True):
     author: str
     created_at: str
 
+class Question(rx.Model, table=True):
+    """A table for questions and answers in the database."""
+    username: str
+    prompt: str
+    answer: str
+    timestamp: datetime.datetime = datetime.datetime.now()
 """
 class Join(rx.Model, table=True):
     
