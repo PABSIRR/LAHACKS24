@@ -18,18 +18,15 @@ def result_view() -> rx.Component:
         rx.scroll_area(
             rx.cond(
                 ChatState.result,
-                rx.text(ChatState.result),
+                rx.markdown(ChatState.result),
                 rx.cond(
                     ChatState.loading,
                     rx.text("AI is answering...", color_scheme="gray"),
-                    rx.text(
-                        "Ask a question to get an answer from GPT.", color_scheme="gray"
-                    ),
                 ),
             ),
             type="hover",
             width="100%",
-            max_height="7em",
+            max_height="50%",
         ),
         rx.cond(
             ChatState.logged_in & (ChatState.result != ""),
@@ -39,28 +36,28 @@ def result_view() -> rx.Component:
 
 
 def upload() -> rx.Component:
-    color = "rgb(107,99,246)"
+    color = "rgb(88, 163, 191)"
     return rx.vstack(
         rx.upload(
             rx.vstack(
-                rx.button("Select any relevant files (i.e. health documents)", color=color, bg="white", border=f"1px solid {color}"),
-                rx.text("Drag and drop files here or click to select files"),
+                rx.button("Select any relevant files (i.e. health documents)", color="black", bg="white", border=f"1px solid {color}"),
             ),
             id="upload1",
             border=f"1px dotted {color}",
-            padding="5em",
+            padding="2em",
+            on_drop=ChatState.handle_upload(rx.upload_files(upload_id="upload1")),
         ),
         rx.hstack(rx.foreach(rx.selected_files("upload1"), rx.text)),
-        rx.button(
-            "Upload",
-            on_click=ChatState.handle_upload(rx.upload_files(upload_id="upload1")),
-        ),
-        rx.button(
-            "Clear",
-            on_click=rx.clear_selected_files("upload1"),
-        ),
-        rx.foreach(ChatState.img, lambda img: rx.image(src=rx.get_upload_url(img))),
-        padding="5em",
+        # rx.button(
+        #     "Upload",
+        #     on_click=ChatState.handle_upload(rx.upload_files(upload_id="upload1")),
+        # ),
+        # rx.button(
+        #     "Clear",
+        #     on_click=rx.clear_selected_files("upload1"),
+        # ),
+        rx.foreach(ChatState.img, lambda img: rx.image(src=rx.get_upload_url(img), max_width="10%")),
+        padding="4em",
     )
 
 def ask_gpt_form() -> rx.Component:
@@ -69,7 +66,11 @@ def ask_gpt_form() -> rx.Component:
         upload(),
         rx.form(
             rx.vstack(
-                rx.input(placeholder="Provide any other relevant context (optional)", name="context", width="100%"),
+                rx.text_area(placeholder="Provide any other relevant context (optional)",
+                             name="context",
+                             width="100%",
+                             max_height="50%",
+                             auto_complete=True),
                 rx.select(
                     ChatState.prompts,
                     on_change=ChatState.set_value,
@@ -77,6 +78,7 @@ def ask_gpt_form() -> rx.Component:
                     variant="soft",
                     radius="full",
                     width="100%",
+                    size="2",
                 ),
                 rx.button("Ask", width="100%"),
                 spacing="3",
