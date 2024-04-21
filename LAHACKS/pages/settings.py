@@ -1,5 +1,5 @@
 """The settings page."""
-
+"""
 from LAHACKS.templates import ThemeState, template
 
 import reflex as rx
@@ -7,11 +7,11 @@ import reflex as rx
 
 @template(route="/settings", title="Settings")
 def settings() -> rx.Component:
-    """The settings page.
+    The settings page.
 
     Returns:
         The UI for the settings page.
-    """
+    
     return rx.vstack(
         rx.heading("Settings", size="8"),
         rx.hstack(
@@ -74,3 +74,4 @@ def settings() -> rx.Component:
             size="1",
         ),
     )
+"""

@@ -15,15 +15,16 @@ def sidebar_header() -> rx.Component:
     return rx.hstack(
         # The logo.
         rx.color_mode_cond(
-            rx.image(src="/reflex_black.svg", height="2em"),
-            rx.image(src="/reflex_white.svg", height="2em"),
+            rx.image(src="/logo_actual.svg", height="2em"),
+            rx.image(src="/logo_actual.svg", height="2em"),
         ),
         rx.spacer(),
-        rx.flex(
-            rx.avatar(fallback=State.user.username[0],radius="medium"),
-            rx.text(State.user.username[0], weight="bold", size="4",align="center"),
-            direction="column",
-            spacing="1"    
+        rx.link(
+            rx.button(
+                rx.icon("notebook-pen"),
+                color_scheme="gray",
+                variant="soft",
+            )
         ),
         align="center",
         width="100%",
@@ -49,18 +50,13 @@ def sidebar_footer() -> rx.Component:
         The sidebar footer component.
     """
     return rx.hstack(
-        rx.spacer(),
-        rx.link(
-            rx.text("Docs"),
-            href="https://reflex.dev/docs/getting-started/introduction/",
-            color_scheme="gray",
+        rx.flex(
+            rx.avatar(fallback=State.user.username[0],radius="medium"),
+            rx.text(State.user.username, weight="bold", size="4",align="center",width="100%"),
+            direction="row",
+            spacing="1",
+            width="100%",   
         ),
-        rx.link(
-            rx.text("Blog"),
-            href="https://reflex.dev/blog/",
-            color_scheme="gray",
-        ),
-        rx.button("Sign out", on_click=State.logout,size="3"),
         width="100%",
         border_top=styles.border,
         padding="1em",
