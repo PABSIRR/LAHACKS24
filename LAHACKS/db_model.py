@@ -8,7 +8,7 @@ class User(rx.Model, table=True):
     """
     username: str
     password: str
-    email: str | None = None
+    email: str
     
 class Post(rx.Model, table=True):
     """
