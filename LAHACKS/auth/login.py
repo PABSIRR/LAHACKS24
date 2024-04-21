@@ -8,19 +8,39 @@ def login():
     return auth_layout(
         rx.box(
             rx.vstack(
-                rx.input(
-                    placeholder="Username",
-                    on_blur=AuthState.set_username,
-                    size="3",
+                rx.box(
+                    rx.input(
+                        placeholder="Username",
+                        on_blur=AuthState.set_username,
+                        size="3",
+                        width="100%",
+                    ),
+                    width="100%"
                 ),
-                rx.input(
-                    type="password",
-                    placeholder="Password",
-                    on_blur=AuthState.set_password,
-                    size="3",
+                rx.box(
+                    rx.input(
+                        type="email",
+                        placeholder="Email",
+                        on_blur=AuthState.set_email,
+                        size="3",
+                        width="100%",
+                    ),
+                    width="100%"
                 ),
-                rx.button("Log in", on_click=AuthState.login, size="3", width="5em"),
+                rx.box(
+                    rx.input(
+                        type="password",
+                        placeholder="Password",
+                        on_blur=AuthState.set_password,
+                        size="3",
+                        width="100%",
+                    ),
+                    width="100%"
+                ),
+                rx.button("Sign in", on_click=AuthState.login, size="3", width="100%",border_radius="2px"),
                 spacing="4",
+                flex_direction="column",
+                width="100%"
             ),
             align_items="left",
             background="white",
@@ -30,9 +50,10 @@ def login():
             border_radius="8px",
         ),
         rx.text(
-            "Don't have an account yet? ",
+            "New to DEPTH.AI ",
             rx.link("Sign up here.", href="/signup"),
-            color="gray",
+            color="black",
+            align="center"
         ),
     )
 
