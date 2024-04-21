@@ -138,7 +138,7 @@ class TestState(State):
         yield
         try:
             """Respond to prompt"""
-            model_inputs = self.get_model_input( prompt = self.question, images = [] )
+            model_inputs = self.get_model_input( context=self.question, images = [] )
             if (self.prompt == self.prompts[0]):
                 answer = self.perscription_feedback_model(model_inputs)
             elif (self.prompt == self.prompts[1]):

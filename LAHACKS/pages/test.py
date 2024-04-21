@@ -140,10 +140,11 @@ def test() -> rx.Component:
                 rx.card(saved_qa()),
             ),
             spacing="4",
-            width="50%",
+            width="100%",
         ),
         justify="center",
         padding_top="6em",
         text_align="top",
         position="relative",
+        width="100%"
     )
