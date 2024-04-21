@@ -42,6 +42,8 @@ class ChatState(State):
     logged_in: bool = False
     loading: bool = False
     filter: str = ""
+    loaded: bool = True
+    
     
     async def handle_upload(self, files: list[rx.UploadFile]):
         # Files that are upload can be PDFs and/or Images
@@ -152,6 +154,7 @@ class ChatState(State):
                 )
         self.result = ""
         self.loading = True
+        self.loaded = False
         yield
         try:
             """Respond to prompt"""
@@ -171,6 +174,7 @@ class ChatState(State):
             return rx.window_alert("Error occured with OpenAI execution.")
         finally:
             self.loading = False
+            self.loaded = True
 
     def save_result(self):
         with rx.session() as session:
