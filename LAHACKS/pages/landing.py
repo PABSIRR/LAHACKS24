@@ -20,17 +20,18 @@ def landing() -> rx.Component:
     }
     return rx.vstack(
         rx.hstack(
-            rx.text("About Us", padding_right= 35, padding_left= 35, padding_top= 5, on_click = rx.scroll_to("Section2")),
-            rx.text("Chat", padding_top= 5, on_click=rx.redirect("/chat")),
+            rx.button("About Us", padding_right= 35, padding_left= 35, padding_top= 5, on_click = rx.scroll_to("Section2"),style=styles.button_style_landing),
+            rx.button("Chat", padding_top= 5, on_click=rx.redirect("/chat"),style=styles.button_style_landing),
             rx.spacer(),
             rx.text("DEPTH.AI", color = "#3B495B", font_weight= "bold", font_size = "28px"),
             rx.spacer(),
-            rx.text("Sign Up", padding_top= 5, on_click=rx.redirect("/login")),
+            rx.button("Sign Up", padding_top= 5, on_click=rx.redirect("/login"),style=styles.button_style_landing),
             rx.text(" | ", padding_top= 5),
-            rx.text("Log In  ", padding_right=35, padding_top=5, on_click=rx.redirect("/login")),
+            rx.button("Log In  ", padding_right=35, padding_top=5, on_click=rx.redirect("/login"),style=styles.button_style_landing),
             width="100%",
             border_bottom="1px solid white",
-            padding="0.5em"
+            padding="0.5em",
+            background_color="#56709B"
         ),
         rx.vstack(
             rx.heading("WELCOME TO", font_family="Lato", font_size=45),
