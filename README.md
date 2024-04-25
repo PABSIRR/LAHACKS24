@@ -1,69 +1,51 @@
-# Welcome to Reflex!
+# Created for LA Hacks 2024
+@PABSIRR @LohitPotnuru @sophiapeckner @anahitavaidhya
+Built using reflex / gemini.
 
-This is the base Reflex template - installed when you run `reflex init`.
+## Inspiration 
+First thing we did when coming to this hack was listen to the Patient Safety and Technology Challenge speaker. This was a problem we never knew existed and thought that a "2nd AI Doctor Opinion" would be a good approach. 
 
-If you want to use a different template, pass the `--template` flag to `reflex init`.
-For example, if you want a more basic starting point, you can run:
+## What it does 
+Want to double check if your doctor prescribed the correct medicine? After all overlooking minute details in a patient's medical history has been know to occur. Want to ensure medication dosage is accurate? Want to get a better understanding of what your medication does and how to use it? We empower patients by giving them access to these tools. 
 
-```bash
-reflex init --template blank
+## How we built it 
+Reflex Framework, Gemini API, SQL Model 
+
+## Challenges we ran into 
+Prompt engineering. Had to finetune the model to ensure it gave accurate with a scientific yet personable tone. Learning the Reflex Framework. A lot of us only had HTML/ CSS/ JS or MERN experience; but this was super cool to learn! 
+
+## Accomplishments that we're proud of 
+Being able to support multimodes of input (i.e. images, PDFs)
+
+## What we learned
+We learned that healthcare is an extremely broad field, and that its hard to come by data accurately for potential problems. The APIs we tried to use didn't have all the data we wanted/needed to solve our problem. So, we had to pivot a lot before finally finding some cases that would work well with Gemini.
+
+We also learned that it can be hard to integrate frontend/backend together when using a new framework, and that it's necessary to be able to keep that in mind at the start of the project.
+
+## What's next for DEPTH.AI
+ - Saving prompts from the past
+ - Allowing users to collaborate with others
+ - Allowing users to see others.
+
+
+# Deployment
+Clone the repository with `git clone git@github.com:<username>/LAHACKS24.git`
+
+Start a virtual environment with 
+```
+py -3 -m venv .venv
+.venv\Scripts\activate
+```
+Run `pip3 install -r requirements.txt`
+
+Generate a Gemini API Key at [Google AI Studio](https://ai.google.dev/gemini-api/docs/workspace). In a file `.env` in the root directory, place the line `GOOGLE_API_KEY=<your api key>`
+
+Run 
+```
+reflex db init
+reflex db makemigrations
+reflex db migrate
 ```
 
-## About this Template
+Run `reflex run` and open the application in a localhost.
 
-This template has the following directory structure:
-
-```bash
-├── README.md
-├── assets
-├── rxconfig.py
-└── {your_app}
-    ├── __init__.py
-    ├── components
-    │   ├── __init__.py
-    │   └── sidebar.py
-    ├── pages
-    │   ├── __init__.py
-    │   ├── dashboard.py
-    │   ├── index.py
-    │   └── settings.py
-    ├── styles.py
-    ├── templates
-    │   ├── __init__.py
-    │   └── template.py
-    └── {your_app}.py
-```
-
-See the [Project Structure docs](https://reflex.dev/docs/getting-started/project-structure/) for more information on general Reflex project structure.
-
-### Adding Pages
-
-In this template, the pages in your app are defined in `{your_app}/pages/`.
-Each page is a function that returns a Reflex component.
-For example, to edit this page you can modify `{your_app}/pages/index.py`.
-See the [pages docs](https://reflex.dev/docs/pages/routes/) for more information on pages.
-
-In this template, instead of using `rx.add_page` or the `@rx.page` decorator,
-we use the `@template` decorator from `{your_app}/templates/template.py`.
-
-To add a new page:
-
-1. Add a new file in `{your_app}/pages/`. We recommend using one file per page, but you can also group pages in a single file.
-2. Add a new function with the `@template` decorator, which takes the same arguments as `@rx.page`.
-3. Import the page in your `{your_app}/pages/__init__.py` file and it will automatically be added to the app.
-
-
-### Adding Components
-
-In order to keep your code organized, we recommend putting components that are
-used across multiple pages in the `{your_app}/components/` directory.
-
-In this template, we have a sidebar component in `{your_app}/components/sidebar.py`.
-
-### Adding State
-
-As your app grows, we recommend using [substates](https://reflex.dev/docs/substates/overview/)
-to organize your state.
-
-You can either define substates in their own files, or if the state is
-specific to a page, you can define it in the page file itself.
